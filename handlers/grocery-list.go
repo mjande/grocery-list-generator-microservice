@@ -23,9 +23,10 @@ func PostGroceryList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Temp
+	groceryList := models.CondenseIntoGroceryList(rawIngredients)
+
 	responseData := GroceryListResponse{
-		Data: rawIngredients,
+		Data: groceryList,
 	}
 
 	err = json.NewEncoder(w).Encode(responseData)
