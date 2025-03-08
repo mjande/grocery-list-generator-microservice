@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"sort"
 
 	"github.com/mjande/grocery-list-generator-microservice/models"
 	"github.com/mjande/grocery-list-generator-microservice/utils"
@@ -24,6 +25,10 @@ func PostGroceryList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	groceryList := models.CondenseIntoGroceryList(rawIngredients)
+
+	sort.Slice(groceryList, func(i, j int) bool {
+		return groceryList[i].Name < groceryList[j].Name
+	})
 
 	responseData := GroceryListResponse{
 		Data: groceryList,
